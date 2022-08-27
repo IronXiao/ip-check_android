@@ -207,7 +207,7 @@ public class SpeedTestActivity extends Activity {
 
         spdLink = it.getStringExtra(Constant.KEY_TEST_SPD_LINK);
         spdLink = spdLink == null ? Constant.DEF_TEST_SPD_LINK : spdLink;
-        printLog2Screen("默认测速地址: " + rttHost);
+        printLog2Screen("默认测速地址: " + spdLink);
 
         if (ipBlackStr != null) {
             ipBlackList = ipBlackStr.split(",");
