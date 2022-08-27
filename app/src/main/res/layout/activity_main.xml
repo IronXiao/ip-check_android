@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_ip_blk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_ip_blk"
+            android:layout_alignBottom="@id/et_ip_blk"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="ip blk list"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_ip_blk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_ip_blk"
+            android:hint="ip blk list"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_cdn_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_cdn_num"
+            android:layout_alignBottom="@id/et_cdn_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="cdn ip num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_cdn_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ip_blk"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_cdn_num"
+            android:hint="cdn ip num"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_cdn_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_cdn_host"
+            android:layout_alignBottom="@id/et_cdn_host"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="cdn host"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_cdn_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cdn_num"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textUri"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_cdn_host"
+            android:hint="cdn host"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_cdn_td_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_cdn_td_num"
+            android:layout_alignBottom="@id/et_cdn_td_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="cdn thread num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_cdn_td_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cdn_host"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_cdn_td_num"
+            android:hint="cdn thread num"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_rtt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_rtt_num"
+            android:layout_alignBottom="@id/et_rtt_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="rtt ip num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_rtt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cdn_td_num"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_rtt_num"
+            android:hint="rtt ip num"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/tv_rtt_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_rtt_host"
+            android:layout_alignBottom="@id/et_rtt_host"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="rtt host"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_rtt_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rtt_num"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textUri"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_rtt_host"
+            android:hint="rtt host"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_rtt_th_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_rtt_td_num"
+            android:layout_alignBottom="@id/et_rtt_td_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="rtt thread num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_rtt_td_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rtt_host"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_rtt_th_num"
+            android:hint="rtt thread num"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_rtt_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_rtt_try"
+            android:layout_alignBottom="@id/et_rtt_try"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="rtt retry"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_rtt_try"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rtt_th_num"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_rtt_retry"
+            android:hint="rtt retry"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_rtt_ok_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_rtt_ok_value"
+            android:layout_alignBottom="@id/et_rtt_ok_value"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="rtt pass value"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_rtt_ok_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rtt_retry"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_rtt_ok_value"
+            android:inputType="number"
+            android:hint="rtt pass value"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_bt_ip_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_bt_ip_num"
+            android:layout_alignBottom="@id/et_bt_ip_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="spd ip num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_bt_ip_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rtt_ok_value"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:inputType="number"
+            android:layout_toRightOf="@id/tv_bt_ip_num"
+            android:hint="spd ip num"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_spd_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_spd_link"
+            android:layout_alignBottom="@id/et_spd_link"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="spd link"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_spd_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_bt_ip_num"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:inputType="textUri"
+            android:layout_toRightOf="@id/tv_spd_host"
+            android:hint="spd link"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/tv_spd_pass_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_spd_pass_value"
+            android:layout_alignBottom="@id/et_spd_pass_value"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="spd pass value"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_spd_pass_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_spd_host"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_spd_pass_value"
+            android:hint="spd pass value"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/tv_min_bt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_min_bt_num"
+            android:layout_alignBottom="@id/et_min_bt_num"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="min better ip num"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_min_bt_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_spd_pass_value"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_min_bt_num"
+            android:hint="min better ip num"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_min_bt_num"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:onClick="onButtonClick"
+            android:text="start"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+</ScrollView>
