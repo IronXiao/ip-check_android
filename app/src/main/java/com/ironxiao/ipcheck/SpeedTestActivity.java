@@ -471,8 +471,8 @@ public class SpeedTestActivity extends Activity {
                 speed = (totalRead * 1000) / ((end - start) * 1024);
                 printLog2Screen(ip + " 下载速度: " + speed + " kB/s");
                 source.close();
-                response.close();
             }
+            response.close();
         } catch (Exception e) {
 
         }
@@ -592,10 +592,10 @@ public class SpeedTestActivity extends Activity {
         pool.shutdown(); // Disable new tasks from being submitted
         try {
             // Wait a while for existing tasks to terminate
-            if (!pool.awaitTermination(0, TimeUnit.SECONDS)) {
+            if (!pool.awaitTermination(1, TimeUnit.SECONDS)) {
                 pool.shutdownNow(); // Cancel currently executing tasks
                 // Wait a while for tasks to respond to being cancelled
-                if (!pool.awaitTermination(0, TimeUnit.SECONDS))
+                if (!pool.awaitTermination(1, TimeUnit.SECONDS))
                     System.err.println("Pool did not terminate");
             }
         } catch (InterruptedException ie) {
@@ -612,18 +612,29 @@ public class SpeedTestActivity extends Activity {
         Log.d(TAG, "onDestroy");
         if (cdnExecutor != null) {
             shutdownAndAwaitTermination(cdnExecutor);
+            cdnExecutor = null;
         }
         if (rttExecutor != null) {
             shutdownAndAwaitTermination(rttExecutor);
+            rttExecutor = null;
         }
 
         mHandler.removeMessages(MSG_MAIN_TASK_START);
         mHandler.removeMessages(MSG_VALID_CHECK_TASK_FINISHED);
         mHandler.removeMessages(MSG_RTT_CHECK_TASK_FINISHED);
         mHandlerThread.quit();
+        try {
+            mHandlerThread.join(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         mHandlerThread = null;
         mSqlDb.close();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
