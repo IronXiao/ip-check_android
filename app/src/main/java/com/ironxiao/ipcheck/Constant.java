@@ -3,7 +3,7 @@ package com.ironxiao.ipcheck;
 public class Constant {
     // cdn ip 数量限制
     public static final String KEY_MAX_NUM_IP_FOR_CDN_CHECK = "max_num_for_cdn";
-    public static final int DEF_MAX_NUM_IP_FOR_CDN_CHECK = 100;
+    public static final int DEF_MAX_NUM_IP_FOR_CDN_CHECK = 10;
 
     // cdn 测试线程数限制
     public static final String KEY_MAX_NUM_THREAD_FOR_CDN_CHECK = "max_num_for_cdn_thread";
