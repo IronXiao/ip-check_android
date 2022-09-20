@@ -173,6 +173,7 @@ public class TestUtils {
         Response response = null;
         ResponseBody body = null;
         Source source = null;
+        BufferedSink bs = null;
         try {
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new RetryInterceptor(3))
                     .connectTimeout(3, TimeUnit.SECONDS).build();
@@ -184,16 +185,22 @@ public class TestUtils {
             if (code == 200) {
                 assert body != null;
                 source = body.source();
-                BufferedSink sink = Okio.buffer(Okio.sink(saveFile));
-                while ((source.read(sink.buffer(), 1024)) != -1) {
+                bs = Okio.buffer(Okio.sink(saveFile));
+                while ((source.read(bs.buffer(), 1024)) != -1) {
                 }
-                sink.writeAll(source);
-                sink.flush();
-                sink.close();
+                bs.writeAll(source);
+                bs.flush();
             }
         } catch (Exception e) {
             success = false;
         } finally {
+            if (bs != null) {
+                try {
+                    bs.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (source != null) {
                 try {
                     source.close();

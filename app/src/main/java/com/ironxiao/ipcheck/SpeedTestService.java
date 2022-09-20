@@ -257,7 +257,7 @@ public class SpeedTestService {
         while (isRunning && finishedTaskNum < totalTaskNum && (finishedTask = cs.take()) != null) {
             try {
                 IPInfo ipInfo = finishedTask.get();
-                transferMessage(ipInfo.ip + "是否为cdn ip:" + ipInfo.isCdnIp);
+                //transferMessage(ipInfo.ip + "是否为cdn ip:" + ipInfo.isCdnIp);
                 if (ipInfo.isCdnIp) {
                     cdnIpList.add(ipInfo.ip);
                 }
@@ -336,7 +336,7 @@ public class SpeedTestService {
             finishedTaskNum++;
         }
         mRunningTasks.clear();
-        transferMessage("测速结束，可用数为" + ipList.size() + "/" + betterIpList.size());
+        transferMessage("测速结束，可用数为" + betterIpList.size() + "/" + ipList.size());
         return betterIpList;
     }
 
