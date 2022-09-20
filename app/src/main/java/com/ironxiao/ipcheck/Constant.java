@@ -2,6 +2,9 @@ package com.ironxiao.ipcheck;
 
 public class Constant {
     // cdn ip 数量限制
+    public static final String KEY_IP_SOURCE_LIST = "ip_source_list";
+    public static final String DEF_KEY_IP_SOURCE_LIST = "https://codeload.github.com/ip-scanner/cloudflare/zip/refs/heads/daily";
+    // cdn ip 数量限制
     public static final String KEY_MAX_NUM_IP_FOR_CDN_CHECK = "max_num_for_cdn";
     public static final int DEF_MAX_NUM_IP_FOR_CDN_CHECK = 10;
 

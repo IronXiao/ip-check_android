@@ -3,6 +3,7 @@ package com.ironxiao.ipcheck;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.SystemClock;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import java.util.concurrent.Future;
 
 public class SpeedTestService {
     private static final String DEFAULT_IP_LIST_FILE = "ip.db";
+    private static final String DEFAULT_IP_LIST_REMOTE = "ip_list.zip";
     private static SpeedTestService sts;
     private Context mContext;
     private OnMessageListener mOnMessageListener;
@@ -32,6 +34,7 @@ public class SpeedTestService {
 
     private boolean isRunning;
     private boolean stopped = true;
+    private boolean downloaded = false;
 
     public void setOnMessageListener(OnMessageListener onMessageListener) {
         this.mOnMessageListener = onMessageListener;
@@ -102,6 +105,8 @@ public class SpeedTestService {
 
     // filter should be like {"104%", "107%"}
     private ArrayList<String> chooseIpFromDatabase(int count, String[] blackFilter) {
+        if (mIpDataBase == null)
+            mIpDataBase = getIpDataBase();
         // 至少筛选1个ip
         if (count < 1) count = 1;
         transferMessage("随机挑选" + count + "个ip中 ... ...");
@@ -151,14 +156,14 @@ public class SpeedTestService {
         if (!stopped) {
             throw new RuntimeException("last test not exit, please try again later!");
         }
-        mIpDataBase = getIpDataBase();
         startInternal();
     }
 
     public void sendStopSignal() {
         transferMessage("正在准备退出测试...");
         this.isRunning = false;
-        mIpDataBase.close();
+        if (mIpDataBase != null)
+            mIpDataBase.close();
         if (mRunningTasks.size() > 0) {
             for (Future<IPInfo> future : mRunningTasks) {
                 future.cancel(false);
@@ -182,8 +187,24 @@ public class SpeedTestService {
             stopped = true;
             return;
         }
-        ArrayList<String> ipList = chooseIpFromDatabase(mConfig.getMaxIPForCdnCheck(),
-                mConfig.getIpBlackList());
+        ArrayList<String> ipList;
+        boolean success = false;
+        long time;
+        if (mConfig.getIpSource().startsWith("http")) {
+            time = SystemClock.uptimeMillis();
+            success = downloaded || TestUtils.downloadFile(mConfig.getIpSource(), new File(mContext.getFilesDir(), DEFAULT_IP_LIST_REMOTE));
+            if (!downloaded)
+                transferMessage("下载IP列表" + (success ? "成功" : "失败") + ",耗时" + (SystemClock.uptimeMillis() - time) + " ms");
+        }
+        if (success) {
+            downloaded = true;
+            time = SystemClock.uptimeMillis();
+            ipList = TestUtils.readIpsFromZipFile(new File(mContext.getFilesDir(), DEFAULT_IP_LIST_REMOTE));
+            transferMessage("从网络端读取了" + ipList.size() + "个ip,耗时" + (SystemClock.uptimeMillis() - time) + " ms");
+        } else {
+            ipList = chooseIpFromDatabase(mConfig.getMaxIPForCdnCheck(),
+                    mConfig.getIpBlackList());
+        }
         try {
             ArrayList<String> cdnIpList = filterIpByCdn(ipList);
             if (cdnIpList.size() == 0) {

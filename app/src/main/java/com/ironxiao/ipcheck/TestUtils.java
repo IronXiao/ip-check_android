@@ -2,23 +2,38 @@ package com.ironxiao.ipcheck;
 
 import android.net.TrafficStats;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
+import okio.Okio;
+import okio.Source;
 
 public class TestUtils {
     // cdn must use http!!!
     private static final String CDN_URL = "http://%s/cdn-cgi/trace";
     // rtt use https!!!
     private static final String RTT_URL = "https://%s/cdn-cgi/trace";
+
+    private static final String IP_REGEX = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
 
     private static int getIntTag() {
         return 110;
@@ -151,5 +166,84 @@ public class TestUtils {
             n++;
         }
         return result;
+    }
+
+    public static boolean downloadFile(String url, File saveFile) {
+        boolean success = true;
+        Response response = null;
+        ResponseBody body = null;
+        Source source = null;
+        try {
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new RetryInterceptor(3))
+                    .connectTimeout(3, TimeUnit.SECONDS).build();
+            Request request = new Request.Builder().url(url).build();
+            Call call = client.newCall(request);
+            response = call.execute();
+            int code = response.code();
+            body = response.body();
+            if (code == 200) {
+                assert body != null;
+                source = body.source();
+                BufferedSink sink = Okio.buffer(Okio.sink(saveFile));
+                while ((source.read(sink.buffer(), 1024)) != -1) {
+                }
+                sink.writeAll(source);
+                sink.flush();
+                sink.close();
+            }
+        } catch (Exception e) {
+            success = false;
+        } finally {
+            if (source != null) {
+                try {
+                    source.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (body != null)
+                body.close();
+
+            if (response != null)
+                response.close();
+        }
+        return success;
+    }
+
+
+    public static ArrayList<String> readIpsFromZipFile(File zipFile) {
+        HashSet<String> tmp = new HashSet<>();
+        try {
+            ZipFile zipSrc = new ZipFile(zipFile);
+            Enumeration<? extends ZipEntry> srcEntries = zipSrc.entries();
+            while (srcEntries.hasMoreElements()) {
+                ZipEntry entry = srcEntries.nextElement();
+                if (entry.getName().endsWith(".txt")) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(zipSrc.getInputStream(entry)));
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        line = line.trim();
+                        if (isIp(line)) {
+                            tmp.add(line);
+                        }
+                    }
+                    br.close();
+                }
+            }
+            zipSrc.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> ips = new ArrayList<>();
+        Iterator<String> it = tmp.iterator();
+        while (it.hasNext()) {
+            ips.add(it.next());
+        }
+        return ips;
+    }
+
+
+    private static boolean isIp(String ipStr) {
+        return ipStr != null && ipStr.matches(IP_REGEX);
     }
 }

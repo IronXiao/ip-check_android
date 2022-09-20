@@ -79,6 +79,9 @@ public class SpeedTestActivity extends Activity {
         printLog2Screen("\n开始读取测试配置... ...");
         Intent it = getIntent();
 
+        String ipSource = it.getStringExtra(Constant.KEY_IP_SOURCE_LIST);
+        printLog2Screen("ip来源为: " + ipSource);
+
         String ipBlackStr = it.getStringExtra(Constant.KEY_BLACK_IP_LIST);
         printLog2Screen("默认ip 黑名单表达式: " + ipBlackStr);
 
@@ -128,7 +131,7 @@ public class SpeedTestActivity extends Activity {
         int maxCountBetterIp = it.getIntExtra(Constant.KEY_MAX_BETTER_IP_COUNT, Constant.DEF_MAX_BETTER_IP_COUNT);
         printLog2Screen("默认最小Better 数量: " + maxCountBetterIp);
         printLog2Screen("测试配置读取完成\n");
-        return new SpeedTestConfig(maxIPForCdnCheck, maxThreadNumForCdnCheck,
+        return new SpeedTestConfig(ipSource, maxIPForCdnCheck, maxThreadNumForCdnCheck,
                 maxIPForRttCheck, maxThreadNumForRttCheck, maxRetryForRtt, maxPassValueForRtt,
                 maxIPForSpdCheck, minPassValueForSpd, maxCountBetterIp, cdnHost, rttHost, spdLink,
                 ipBlackList);

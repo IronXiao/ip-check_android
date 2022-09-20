@@ -10,6 +10,31 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_ip_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_ip_list"
+            android:layout_alignBottom="@id/et_ip_list"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="ip列表源"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_ip_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_ip_list"
+            android:hint="ip列表地址"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/tv_ip_blk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_ip_list"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:inputType="text"
@@ -348,7 +374,6 @@
             android:inputType="number"
             android:maxLines="1"
             android:textSize="20sp" />
-
 
         <Button
             android:layout_width="wrap_content"
