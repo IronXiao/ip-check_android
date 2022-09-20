@@ -145,6 +145,14 @@ public class SpeedTestActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mSpeedTestService.sendStopSignal();
+        mHandler.removeCallbacks(mFinishTask);
+        mHandler.postDelayed(mFinishTask, COMMON_DELAY);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mHandlerThread.quitSafely();
