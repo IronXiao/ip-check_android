@@ -12,15 +12,16 @@ public class SpeedTestConfig {
             maxCountBetterIp;
 
 
-    private String cdnHost, rttHost, spdLink;
+    private String ipSource, cdnHost, rttHost, spdLink;
 
     private String[] ipBlackList;
 
 
-    public SpeedTestConfig(int maxIPForCdnCheck, int maxThreadNumForCdnCheck, int maxIPForRttCheck,
+    public SpeedTestConfig(String ipSource, int maxIPForCdnCheck, int maxThreadNumForCdnCheck, int maxIPForRttCheck,
                            int maxThreadNumForRttCheck, int maxRetryForRtt, int maxPassValueForRtt,
                            int maxIPForSpdCheck, int minPassValueForSpd, int maxCountBetterIp,
                            String cdnHost, String rttHost, String spdLink, String[] ipBlackList) {
+        this.ipSource = ipSource;
         this.maxIPForCdnCheck = maxIPForCdnCheck;
         this.maxThreadNumForCdnCheck = maxThreadNumForCdnCheck;
         this.maxIPForRttCheck = maxIPForRttCheck;
@@ -34,6 +35,10 @@ public class SpeedTestConfig {
         this.rttHost = rttHost;
         this.spdLink = spdLink;
         this.ipBlackList = ipBlackList;
+    }
+
+    public String getIpSource() {
+        return ipSource;
     }
 
     public int getMaxIPForCdnCheck() {

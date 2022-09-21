@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
-    private EditText blkList, cdnIpNum, cdnHost, cdnTdNum, rttIpNum, rttHost, rttTdNum, rttRetry,
+    private EditText ipSource, blkList, cdnIpNum, cdnHost, cdnTdNum, rttIpNum, rttHost, rttTdNum, rttRetry,
             rttPassValue, spdIpNum, spdLink, spdPassValue, btNum;
 
     private int maxIPForCdnCheck,
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
             maxCountBetterIp;
 
 
-    private String cdnHostStr, rttHostStr, spdLinkStr, ipBlackListStr;
+    private String ipSourceStr, cdnHostStr, rttHostStr, spdLinkStr, ipBlackListStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
     }
 
     private void findViews() {
+        ipSource = findViewById(R.id.et_ip_list);
         blkList = findViewById(R.id.et_ip_blk);
         cdnIpNum = findViewById(R.id.et_cdn_num);
         cdnHost = findViewById(R.id.et_cdn_host);
@@ -55,6 +56,8 @@ public class MainActivity extends Activity {
 
 
     private void initValuesFromDefaults() {
+        ipSourceStr = Constant.DEF_KEY_IP_SOURCE_LIST;
+        ipSource.setText(ipSourceStr);
         ipBlackListStr = Constant.DEF_BLACK_IP_LIST;
         blkList.setText(ipBlackListStr);
         maxIPForCdnCheck = Constant.DEF_MAX_NUM_IP_FOR_CDN_CHECK;
@@ -88,6 +91,7 @@ public class MainActivity extends Activity {
     }
 
     private void readInfo() {
+        ipSourceStr = ipSource.getText().toString();
         ipBlackListStr = blkList.getText().toString();
         cdnHostStr = cdnHost.getText().toString();
         rttHostStr = rttHost.getText().toString();
@@ -115,6 +119,7 @@ public class MainActivity extends Activity {
     private Intent buildIntent() {
         readInfo();
         Intent it = new Intent(this, SpeedTestActivity.class);
+        it.putExtra(Constant.KEY_IP_SOURCE_LIST, ipSourceStr);
         it.putExtra(Constant.KEY_BLACK_IP_LIST, ipBlackListStr);
         it.putExtra(Constant.KEY_MAX_NUM_IP_FOR_CDN_CHECK, maxIPForCdnCheck);
         it.putExtra(Constant.KEY_TEST_CND_HOST, cdnHostStr);
