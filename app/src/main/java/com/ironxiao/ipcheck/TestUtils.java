@@ -4,8 +4,6 @@ import android.net.TrafficStats;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -128,12 +126,20 @@ public class TestUtils {
                 byte[] bytes = new byte[1024];
                 long end = System.currentTimeMillis();
                 long totalRead = 0;
+                long lastRead = 0;
                 long read;
-                while ((read = source.read(bytes)) != -1 && end - start < timeout) {
+                long last_speed;
+                long last_speed_ts = System.currentTimeMillis();
+                while (end - start < timeout && (read = source.read(bytes)) != -1) {
                     totalRead += read;
                     end = System.currentTimeMillis();
+                    if (end - last_speed_ts > 1000) {
+                        last_speed = ((totalRead - lastRead) * 1000) / ((end - last_speed_ts) * 1024);
+                        last_speed_ts = end;
+                        lastRead = totalRead;
+                        if (last_speed > speed) speed = last_speed;
+                    }
                 }
-                speed = (totalRead * 1000) / ((end - start) * 1024);
             }
         } catch (Exception e) {
         } finally {
@@ -175,8 +181,7 @@ public class TestUtils {
         Source source = null;
         BufferedSink bs = null;
         try {
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new RetryInterceptor(3))
-                    .connectTimeout(3, TimeUnit.SECONDS).build();
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new RetryInterceptor(3)).connectTimeout(3, TimeUnit.SECONDS).build();
             Request request = new Request.Builder().url(url).build();
             Call call = client.newCall(request);
             response = call.execute();
@@ -208,11 +213,9 @@ public class TestUtils {
                     e.printStackTrace();
                 }
             }
-            if (body != null)
-                body.close();
+            if (body != null) body.close();
 
-            if (response != null)
-                response.close();
+            if (response != null) response.close();
         }
         return success;
     }
