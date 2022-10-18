@@ -213,7 +213,8 @@ public class SpeedTestService {
                 return;
             }
             cdnIpList = TestUtils.resizeIpListBySize(cdnIpList, mConfig.getMaxIPForRttCheck());
-            ArrayList<String> rttIPList = filterIpByRtt(cdnIpList);
+            ArrayList<String> rttIPList = mConfig.getMaxPassValueForRtt() > 0 ?
+                    filterIpByRtt(cdnIpList) : cdnIpList;
             if (rttIPList.size() == 0) {
                 transferMessage("没有筛选到ip 用于速度测试, 重新优选！");
                 testInternal();
